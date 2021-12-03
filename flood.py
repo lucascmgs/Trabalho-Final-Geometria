@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import math
 
 
 class Flood:
@@ -44,16 +45,15 @@ class Flood:
                                 self.data[x][y] = self.data[i][j]
                                 
                                     
-
-
         return self.data
 
     def jump_flood_iteration(self):
         width = self.data.shape[0]
         height = self.data.shape[1]
-        prev_data = self.data.copy()
         changed = False
+        distances = {}
 
+        print(f"Step: {self.step}")
         for x in range(width):
             for y in range(height):
                 esquerda = x - self.step
@@ -66,8 +66,8 @@ class Flood:
                     for j in vertical:
                         #Checamos se pelo menos um dos índices atuais está fora da imagem ou é a própria célula
                         if i >= 0 and i < width and j >= 0 and j < height:
-                            neighboor_color = int(prev_data[i][j])
-                            current_color = int(prev_data[x][y])
+                            neighboor_color = int(self.data[i][j])
+                            current_color = int(self.data[x][y])
                             neighboor_seed_pos = self.colors_dict[neighboor_color]
                             current_seed_pos = self.colors_dict[current_color]
                             if neighboor_color > 0:
@@ -75,9 +75,15 @@ class Flood:
                                     self.data[x][y] = self.data[i][j]
                                     changed = True
                                 else:
-                                    current_seed_distance = np.sqrt((current_seed_pos[0]-x)**2 + (current_seed_pos[1]-y)**2)
-                                    neighboor_seed_distance = np.sqrt((neighboor_seed_pos[0]-x)**2 + (neighboor_seed_pos[1]-y)**2)
+                                    current_seed_distance = None
+                                    if not (x,y) in distances:
+                                        current_seed_distance = (current_seed_pos[0]-x)**2 + (current_seed_pos[1]-y)**2
+                                    else:
+                                        current_seed_distance = distances[(x,y)]
+
+                                    neighboor_seed_distance = (neighboor_seed_pos[0]-x)**2 + (neighboor_seed_pos[1]-y)**2
                                     if neighboor_seed_distance < current_seed_distance:
+                                        distances[(x,y)] = neighboor_seed_distance
                                         self.data[x][y] = self.data[i][j]
                                         changed = True
 

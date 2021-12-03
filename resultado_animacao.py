@@ -7,17 +7,16 @@ import flood
 
 plt.rcParams['animation.ffmpeg_path'] = 'D:/ffmpeg/bin/ffmpeg.exe'
 
-gridsize = 100
+gridsize = 50
 cmap = colors.ListedColormap(['white','#ffc5d0', '#ffff00', '#22cae0', '#f52ec0', '#603f8b', '#b4fee7', '#a16ae8', '#fd49a0', '#821d30'])
 bounds = [0,1,2,3,4,5,6, 7, 8]
 norm = colors.BoundaryNorm(bounds, cmap.N)
 fig, ax = plt.subplots(figsize = (8, 8))
 data = np.zeros((gridsize, gridsize))
 
-updated_image = ax.imshow(data, cmap=cmap, norm=norm)
+updated_image = ax.imshow(data)
 
 
-#ax.grid(which='major', animated = True, axis='both', linestyle='-', color='k', linewidth=2)
 ax.set_xticks(np.arange(-.5, gridsize, 1))
 ax.set_yticks(np.arange(-.5, gridsize, 1))
 ax.set_yticklabels([])

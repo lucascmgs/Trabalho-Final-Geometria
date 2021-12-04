@@ -4,12 +4,15 @@ import math
 
 
 class Flood:
-    def __init__(self, gridsize):
+    def __init__(self, gridsize, jump=True):
         self.data = np.zeros((gridsize, gridsize))
         self.colors_dict = {}
         self.initialized = False
         self.ended = False
-        self.step = gridsize//2
+        if(jump):
+            self.step = gridsize//2
+        else:
+            self.step = 1
 
     def set_seeds(self, number_of_seeds = 5):
         self.colors_dict[0] = (np.inf, np.inf)

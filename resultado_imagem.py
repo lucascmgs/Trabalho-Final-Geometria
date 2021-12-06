@@ -4,9 +4,10 @@ import numpy as np
 import flood
 
 
-gridsize = 500
+gridsize = 100
 flood_obj = flood.Flood(gridsize)
 flood_obj.set_seeds(10)
+start_data = flood_obj.data.copy()
 seeds_x = []
 seeds_y = []
 
@@ -30,9 +31,20 @@ while control > 1:
 
 
 
-gridsize = 100
 data = flood_obj.data
+figure, axes = plt.subplots(1, 2)
+axes[0].imshow(data)
+axes[0].scatter(seeds_x, seeds_y, color="red")
 
-plt.imshow(data)
-plt.scatter(seeds_x, seeds_y, color="red")
+
+
+flood_obj.data = start_data
+for i in range(gridsize):
+    flood_obj.common_flood_iteration()
+
+data2 = flood_obj.data
+axes[1].imshow(data2)
+axes[1].scatter(seeds_x, seeds_y, color="red")
+
+
 plt.show()

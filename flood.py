@@ -55,8 +55,6 @@ class Flood:
         height = self.data.shape[1]
         changed = False
         distances = {}
-
-        print(f"Step: {self.step}")
         for x in range(width):
             for y in range(height):
                 esquerda = x - self.step
